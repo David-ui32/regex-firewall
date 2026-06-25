@@ -38,3 +38,7 @@ Command: grep -Ec '^[0-9-]+ 0[0-2]:' firewall.log
 Result: 13138
 Explanation: ^[0-9-]+ consume el campo date completo, y el espacio que sigue me posiciona justo al inicio del campo time. 0[0-2] usa un rango de clase de caracteres [0-2] para matchear el segundo dígito de la hora (00, 01 o 02), y el : confirma que estoy efectivamente en el campo de la hora y no en otro número de dos dígitos.
 
+## Bonus
+Regex: ^[^ ]+$
+Explanation: [^ ] es una clase de caracteres negada (cualquier carácter que NO sea un espacio), el + la repite una o más veces, y ^...$ ancla el patrón a la línea completa. Como "that server is broken" contiene espacios, no puede matchear de punta a punta, mientras que las otras tres líneas no tienen espacios y sí matchean completas.
+
