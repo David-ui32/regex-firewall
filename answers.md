@@ -8,3 +8,8 @@ Command: grep -Ec '^[0-9-]+ [0-9:]+ (DROP|REJECT) ' firewall.log
 Result: 60156
 Explanation: Para asegurarme de matchear el campo action y no esas letras en otro lugar de la línea, primero "consumo" los dos campos anteriores: ^[0-9-]+ matchea la fecha, un espacio, [0-9:]+ matchea la hora, y otro espacio, dejándome justo al inicio del campo action. Ahí el grupo (DROP|REJECT) usa el operador de alternación | para matchear cualquiera de las dos palabras, y el espacio final asegura que sea la palabra completa del campo.
 
+## Task 3
+Command: grep -Ec '^[0-9-]+ [0-9:]+ [A-Z]+ (TCP|UDP) 11\.' firewall.log
+Result: 33217
+Explanation: Consumo fecha, hora, action ([A-Z]+ cubre ACCEPT, DROP, REJECT, FORWARD) y protocol (TCP|UDP) para llegar exactamente al inicio del campo src-ip. Ahí 11\. matchea el literal "11." — el carácter \ escapa el punto para que se trate como punto literal y no como el metacaracter "cualquier carácter".
+
