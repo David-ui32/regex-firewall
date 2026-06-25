@@ -13,3 +13,8 @@ Command: grep -Ec '^[0-9-]+ [0-9:]+ [A-Z]+ (TCP|UDP) 11\.' firewall.log
 Result: 33217
 Explanation: Consumo fecha, hora, action ([A-Z]+ cubre ACCEPT, DROP, REJECT, FORWARD) y protocol (TCP|UDP) para llegar exactamente al inicio del campo src-ip. Ahí 11\. matchea el literal "11." — el carácter \ escapa el punto para que se trate como punto literal y no como el metacaracter "cualquier carácter".
 
+## Task 4
+Command: grep -Ec ' [0-9]{7}$' firewall.log
+Result: 2343
+Explanation: El ancla $ marca el final de línea, donde está el campo size. El cuantificador {7} exige exactamente 7 dígitos consecutivos justo antes de ese final. El espacio antes del [0-9]{7} asegura que el campo completo tenga exactamente 7 dígitos y no se trate de los últimos 7 dígitos de un número más largo.
+
