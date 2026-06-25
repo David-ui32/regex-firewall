@@ -18,3 +18,13 @@ Command: grep -Ec ' [0-9]{7}$' firewall.log
 Result: 2343
 Explanation: El ancla $ marca el final de línea, donde está el campo size. El cuantificador {7} exige exactamente 7 dígitos consecutivos justo antes de ese final. El espacio antes del [0-9]{7} asegura que el campo completo tenga exactamente 7 dígitos y no se trate de los últimos 7 dígitos de un número más largo.
 
+## Task 5
+Command: grep -Ev '^#' firewall.log | sed -E 's/^([0-9-]+) ([0-9:]+) ([A-Z]+) (TCP|UDP) .*/\1 \3 \4/' | head -5
+Result:
+2018-05-25 FORWARD TCP
+2018-02-22 FORWARD UDP
+2018-03-20 REJECT UDP
+2018-11-08 REJECT TCP
+2018-07-24 REJECT TCP
+Explanation: Primero grep -Ev '^#' elimina las 4 líneas de cabecera (que no siguen el formato de los eventos). Luego sed -E usa 4 grupos de captura (): el grupo 1 captura la fecha, el grupo 2 la hora, el grupo 3 el action y el grupo 4 el protocol; el resto de la línea (.*) se descarta. La sustitución reconstruye la línea usando solo \1 \3 \4 (backreferences a los grupos capturados), dejando únicamente date, action y protocol.
+
