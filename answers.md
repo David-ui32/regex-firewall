@@ -33,3 +33,8 @@ Command: grep -Ec '^[0-9-]+ [0-9:]+ ACCEPT TCP .* 80 [0-9]+$' firewall.log
 Result: 93
 Explanation: Ancla fecha y hora con clases de caracteres, luego exige los literales ACCEPT y TCP en sus posiciones exactas. La parte ".* 80 " busca el literal "80" como campo completo, y como el campo siguiente y último es size ([0-9]+$, anclado al final de línea), esto garantiza que el "80" matcheado es justo el campo dst-port (penúltimo campo) y no, por ejemplo, parte de un puerto distinto como 180 u 8090.
 
+## Task 7
+Command: grep -Ec '^[0-9-]+ 0[0-2]:' firewall.log
+Result: 13138
+Explanation: ^[0-9-]+ consume el campo date completo, y el espacio que sigue me posiciona justo al inicio del campo time. 0[0-2] usa un rango de clase de caracteres [0-2] para matchear el segundo dígito de la hora (00, 01 o 02), y el : confirma que estoy efectivamente en el campo de la hora y no en otro número de dos dígitos.
+
