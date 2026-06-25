@@ -28,3 +28,8 @@ Result:
 2018-07-24 REJECT TCP
 Explanation: Primero grep -Ev '^#' elimina las 4 líneas de cabecera (que no siguen el formato de los eventos). Luego sed -E usa 4 grupos de captura (): el grupo 1 captura la fecha, el grupo 2 la hora, el grupo 3 el action y el grupo 4 el protocol; el resto de la línea (.*) se descarta. La sustitución reconstruye la línea usando solo \1 \3 \4 (backreferences a los grupos capturados), dejando únicamente date, action y protocol.
 
+## Task 6
+Command: grep -Ec '^[0-9-]+ [0-9:]+ ACCEPT TCP .* 80 [0-9]+$' firewall.log
+Result: 93
+Explanation: Ancla fecha y hora con clases de caracteres, luego exige los literales ACCEPT y TCP en sus posiciones exactas. La parte ".* 80 " busca el literal "80" como campo completo, y como el campo siguiente y último es size ([0-9]+$, anclado al final de línea), esto garantiza que el "80" matcheado es justo el campo dst-port (penúltimo campo) y no, por ejemplo, parte de un puerto distinto como 180 u 8090.
+
